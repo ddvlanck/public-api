@@ -20,7 +20,6 @@ namespace Public.Api.PostalCode
         /// Vraag een lijst met postinfo over postcodes op.
         /// </summary>
         /// <param name="page">Optionele nulgebaseerde index van de Linked Data Event Stream. Indien null wordt altijd geredirect naar pagina 1</param>
-        /// <param name="limit">Optioneel maximaal aantal instanties dat teruggegeven wordt.</param>
         /// <param name="cancellationToken"></param>
         /// <response code="200">Als de opvraging van een lijst met postinfo over postcodes gelukt is.</response>
         /// <response code="304">Als de lijst niet gewijzigd is ten opzicht van uw verzoek.</response>
@@ -46,8 +45,6 @@ namespace Public.Api.PostalCode
             var contentFormat = DetermineFormat(actionContextAccessor.ActionContext);
 
             var cacheKey = $"legacy/postalinfo-ldes:{pageNumber}";
-
-
 
             RestRequest BackendRequest() => CreateBackendLdesRequest(offset, limit);
             var value = await (CacheToggle.FeatureEnabled
