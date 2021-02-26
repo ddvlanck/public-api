@@ -26,7 +26,7 @@ namespace Public.Api.PostalCode
         /// <response code="400">Als uw verzoek foutieve data bevat.</response>
         /// <response code="406">Als het gevraagde formaat niet beschikbaar is.</response>
         /// <response code="500">Als er een interne fout is opgetreden.</response>
-        [HttpGet("postinfo/base", Name = nameof(GetLinkedDataEventStreamPage))]
+        [HttpGet("base/postinfo", Name = nameof(GetLinkedDataEventStreamPage))]
         public async Task<IActionResult> GetLinkedDataEventStreamPage(
             [FromQuery] string? page,
             [FromServices] IActionContextAccessor actionContextAccessor,
