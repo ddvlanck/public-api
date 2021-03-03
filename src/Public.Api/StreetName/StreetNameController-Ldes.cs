@@ -9,25 +9,25 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Public.Api.PostalCode
+namespace Public.Api.StreetName
 {
-    public partial class PostalCodeController
+    public partial class StreetNameController
     {
 
         public readonly int PageSize = 250;
 
         /// <summary>
-        /// Vraag een lijst met postinfo over postcodes op.
+        /// Vraag een lijst met info over straatnamen op.
         /// </summary>
         /// <param name="page">Optionele nulgebaseerde index van de Linked Data Event Stream. Indien null wordt altijd geredirect naar pagina 1</param>
         /// <param name="cancellationToken"></param>
-        /// <response code="200">Als de opvraging van een lijst met postinfo over postcodes gelukt is.</response>
+        /// <response code="200">Als de opvraging van een lijst met info over straatnamen gelukt is.</response>
         /// <response code="304">Als de lijst niet gewijzigd is ten opzicht van uw verzoek.</response>
         /// <response code="400">Als uw verzoek foutieve data bevat.</response>
         /// <response code="406">Als het gevraagde formaat niet beschikbaar is.</response>
         /// <response code="500">Als er een interne fout is opgetreden.</response>
-        [HttpGet("base/postinfo", Name = nameof(GetLinkedDataEventStreamPagePostalCodes))]
-        public async Task<IActionResult> GetLinkedDataEventStreamPagePostalCodes(
+        [HttpGet("base/straatnamen", Name = nameof(GetLinkedDataEventStreamPageStreetnames))]
+        public async Task<IActionResult> GetLinkedDataEventStreamPageStreetnames(
             [FromQuery] string? page,
             [FromServices] IActionContextAccessor actionContextAccessor,
             [FromHeader(Name = HeaderNames.IfNoneMatch)] string ifNoneMatch,
@@ -43,7 +43,7 @@ namespace Public.Api.PostalCode
             var offset = (pageNumber - 1) * PageSize;
             var contentFormat = DetermineFormat(actionContextAccessor.ActionContext);
 
-            var cacheKey = $"legacy/postalinfo-ldes:{pageNumber}";
+            var cacheKey = $"legacy/streetname-ldes:{pageNumber}";
 
             RestRequest BackendRequest() => CreateBackendLdesRequest(offset, PageSize);
             var value = await (CacheToggle.FeatureEnabled
@@ -67,10 +67,9 @@ namespace Public.Api.PostalCode
             int? offset,
             int? limit)
         {
-            var request = new RestRequest("postcodes/base");
+            var request = new RestRequest("straatnamen/base");
             request.AddPagination(offset, limit);
             return request;
         }
-
     }
 }
